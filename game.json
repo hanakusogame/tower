@@ -1,0 +1,337 @@
+{
+	"width": 640,
+	"height": 360,
+	"fps": 30,
+	"main": "./script/main.js",
+	"assets": {
+		"se": {
+			"type": "audio",
+			"path": "audio/se",
+			"systemId": "sound",
+			"duration": 250
+		},
+		"main": {
+			"type": "script",
+			"path": "script/main.js",
+			"global": true
+		},
+		"Button": {
+			"type": "script",
+			"path": "script/Button.js",
+			"global": true
+		},
+		"Config": {
+			"type": "script",
+			"path": "script/Config.js",
+			"global": true
+		},
+		"MainGame": {
+			"type": "script",
+			"path": "script/MainGame.js",
+			"global": true
+		},
+		"MainScene": {
+			"type": "script",
+			"path": "script/MainScene.js",
+			"global": true
+		},
+		"bgm": {
+			"type": "audio",
+			"path": "audio/bgm",
+			"systemId": "music",
+			"duration": 59077
+		},
+		"se_hit": {
+			"type": "audio",
+			"path": "audio/se_hit",
+			"systemId": "sound",
+			"duration": 732
+		},
+		"se_item": {
+			"type": "audio",
+			"path": "audio/se_item",
+			"systemId": "sound",
+			"duration": 654
+		},
+		"se_miss": {
+			"type": "audio",
+			"path": "audio/se_miss",
+			"systemId": "sound",
+			"duration": 360
+		},
+		"se_move": {
+			"type": "audio",
+			"path": "audio/se_move",
+			"systemId": "sound",
+			"duration": 105
+		},
+		"se_start": {
+			"type": "audio",
+			"path": "audio/se_start",
+			"systemId": "sound",
+			"duration": 1701
+		},
+		"se_timeup": {
+			"type": "audio",
+			"path": "audio/se_timeup",
+			"systemId": "sound",
+			"duration": 1080
+		},
+		"config": {
+			"type": "image",
+			"width": 40,
+			"height": 40,
+			"path": "image/config.png"
+		},
+		"effect": {
+			"type": "image",
+			"width": 360,
+			"height": 120,
+			"path": "image/effect.png"
+		},
+		"finish": {
+			"type": "image",
+			"width": 360,
+			"height": 150,
+			"path": "image/finish.png"
+		},
+		"img_numbers_n": {
+			"type": "image",
+			"width": 364,
+			"height": 64,
+			"path": "image/img_numbers_n.png"
+		},
+		"img_numbers_n_red": {
+			"type": "image",
+			"width": 364,
+			"height": 32,
+			"path": "image/img_numbers_n_red.png"
+		},
+		"number_b": {
+			"type": "image",
+			"width": 936,
+			"height": 84,
+			"path": "image/number_b.png"
+		},
+		"number_k": {
+			"type": "image",
+			"width": 936,
+			"height": 84,
+			"path": "image/number_k.png"
+		},
+		"number_p": {
+			"type": "image",
+			"width": 936,
+			"height": 84,
+			"path": "image/number_p.png"
+		},
+		"number_w": {
+			"type": "image",
+			"width": 1080,
+			"height": 168,
+			"path": "image/number_w.png"
+		},
+		"number_y": {
+			"type": "image",
+			"width": 1080,
+			"height": 84,
+			"path": "image/number_y.png"
+		},
+		"score": {
+			"type": "image",
+			"width": 100,
+			"height": 96,
+			"path": "image/score.png"
+		},
+		"shadow": {
+			"type": "image",
+			"width": 50,
+			"height": 50,
+			"path": "image/shadow.png"
+		},
+		"start": {
+			"type": "image",
+			"width": 500,
+			"height": 150,
+			"path": "image/start.png"
+		},
+		"time": {
+			"type": "image",
+			"width": 38,
+			"height": 38,
+			"path": "image/time.png"
+		},
+		"title": {
+			"type": "image",
+			"width": 640,
+			"height": 360,
+			"path": "image/title.png"
+		},
+		"volume": {
+			"type": "image",
+			"width": 64,
+			"height": 32,
+			"path": "image/volume.png"
+		},
+		"waku": {
+			"type": "image",
+			"width": 444,
+			"height": 320,
+			"path": "image/waku.png"
+		},
+		"glyph28": {
+			"type": "text",
+			"path": "text/glyph28.json"
+		},
+		"glyph32_yellow": {
+			"type": "text",
+			"path": "text/glyph32_yellow.json"
+		},
+		"glyph72": {
+			"type": "text",
+			"path": "text/glyph72.json"
+		},
+		"test": {
+			"type": "text",
+			"path": "text/test.json"
+		},
+		"ice": {
+			"type": "image",
+			"width": 360,
+			"height": 180,
+			"path": "image/ice.png"
+		},
+		"line": {
+			"type": "image",
+			"width": 60,
+			"height": 360,
+			"path": "image/line.png"
+		},
+		"panel": {
+			"type": "image",
+			"width": 210,
+			"height": 210,
+			"path": "image/panel.png"
+		},
+		"Enemy": {
+			"type": "script",
+			"path": "script/Enemy.js",
+			"global": true
+		},
+		"Shot": {
+			"type": "script",
+			"path": "script/Shot.js",
+			"global": true
+		},
+		"Unit": {
+			"type": "script",
+			"path": "script/Unit.js",
+			"global": true
+		},
+		"Map": {
+			"type": "script",
+			"path": "script/Map.js",
+			"global": true
+		},
+		"enemy_csv": {
+			"type": "text",
+			"path": "text/enemy_csv.csv"
+		},
+		"unit_csv": {
+			"type": "text",
+			"path": "text/unit_csv.csv"
+		},
+		"Parameter": {
+			"type": "script",
+			"path": "script/Parameter.js",
+			"global": true
+		},
+		"UnitInfo": {
+			"type": "script",
+			"path": "script/UnitInfo.js",
+			"global": true
+		},
+		"EnemyInfo": {
+			"type": "script",
+			"path": "script/EnemyInfo.js",
+			"global": true
+		},
+		"area": {
+			"type": "image",
+			"width": 300,
+			"height": 300,
+			"path": "image/area.png"
+		},
+		"enemy": {
+			"type": "image",
+			"width": 200,
+			"height": 300,
+			"path": "image/enemy.png"
+		},
+		"enemy2": {
+			"type": "image",
+			"width": 400,
+			"height": 400,
+			"path": "image/enemy2.png"
+		},
+		"unit": {
+			"type": "image",
+			"width": 250,
+			"height": 50,
+			"path": "image/unit.png"
+		},
+		"base": {
+			"type": "image",
+			"width": 100,
+			"height": 50,
+			"path": "image/base.png"
+		},
+		"Tower": {
+			"type": "script",
+			"path": "script/Tower.js",
+			"global": true
+		},
+		"EnemyBase": {
+			"type": "script",
+			"path": "script/EnemyBase.js",
+			"global": true
+		}
+	},
+	"moduleMainScripts": {
+		"@akashic-extension/akashic-timeline": "node_modules/@akashic-extension/akashic-timeline/lib/index.js",
+		"astar-typescript": "node_modules/astar-typescript/dist/astar.js",
+		"lodash": "node_modules/lodash/lodash.js",
+		"isexe": "node_modules/isexe/index.js",
+		"which": "node_modules/which/which.js"
+	},
+	"environment": {
+		"sandbox-runtime": "2",
+		"niconico": {
+			"supportedModes": [
+				"single",
+				"ranking"
+			],
+			"preferredSessionParameters": {
+				"totalTimeLimit": 200
+			}
+		}
+	},
+	"globalScripts": [
+		"node_modules/@akashic-extension/akashic-timeline/lib/ActionType.js",
+		"node_modules/@akashic-extension/akashic-timeline/lib/Easing.js",
+		"node_modules/@akashic-extension/akashic-timeline/lib/Timeline.js",
+		"node_modules/@akashic-extension/akashic-timeline/lib/Tween.js",
+		"node_modules/@akashic-extension/akashic-timeline/lib/index.js",
+		"node_modules/astar-typescript/dist/astar.js",
+		"node_modules/astar-typescript/dist/core/grid.js",
+		"node_modules/astar-typescript/dist/core/heuristic.js",
+		"node_modules/astar-typescript/dist/core/node.js",
+		"node_modules/astar-typescript/dist/core/util.js",
+		"node_modules/astar-typescript/dist/finders/astar-finder.js",
+		"node_modules/lodash/lodash.js",
+		"node_modules/isexe/index.js",
+		"node_modules/isexe/mode.js",
+		"node_modules/isexe/windows.js",
+		"node_modules/which/which.js"
+	]
+}
