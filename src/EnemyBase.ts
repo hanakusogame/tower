@@ -1,4 +1,5 @@
 import tl = require("@akashic-extension/akashic-timeline");
+import { AStarFinder } from "astar-typescript";
 import { Enemy } from "./Enemy";
 import { EnemyInfo } from "./EnemyInfo";
 import { MainGame } from "./MainGame";
@@ -12,16 +13,9 @@ import { UnitInfo } from "./UnitInfo";
 //敵管理クラス
 export class EnemyBase extends g.E {
 	public enemyCnt = 0;
-	public next: (stage: number) => void;
-	constructor(
-		pram: g.EParameterObject,
-		mainGame: MainGame,
-		tower: Tower,
-		mapSize: number,
-		enemyInfo: EnemyInfo,
-		unitInfo: UnitInfo,
-		maps: Map[][]
-	) {
+	public next: (stage: number, maps: Map[][]) => void;
+	public setPath: (myMatrix: number[][]) => boolean;
+	constructor(pram: g.EParameterObject, mainGame: MainGame, tower: Tower, enemyInfo: EnemyInfo, unitInfo: UnitInfo) {
 		super(pram);
 
 		const scene = this.scene as MainScene;
@@ -48,6 +42,7 @@ export class EnemyBase extends g.E {
 
 		//敵
 		const enemys: Enemy[] = [];
+		const mapSize = 340 / 8;
 		for (let i = 0; i < 10; i++) {
 			const enemy = new Enemy(
 				{
@@ -70,7 +65,7 @@ export class EnemyBase extends g.E {
 		Unit.baseEnemy = this;
 
 		//ネクストステージ
-		this.next = (stage: number) => {
+		this.next = (stage: number, maps: Map[][]) => {
 			this.enemyCnt = 9;
 			if (stage % 4 === 0) {
 				this.enemyCnt = 1;
@@ -102,6 +97,37 @@ export class EnemyBase extends g.E {
 					enemy.modified();
 				}
 			});
+		};
+
+		//経路の探索
+		this.setPath = (myMatrix: number[][]) => {
+			let isPath = true; //全ての経路が塞がっていないか
+
+			const aStarInstance = new AStarFinder({
+				grid: {
+					matrix: myMatrix,
+				},
+				diagonalAllowed: false,
+			});
+
+			//敵の経路を設定
+			this.children.forEach((entity) => {
+				if (!isPath) return;
+				const enemy = entity as Enemy;
+				if (!enemy.setPath(aStarInstance)) {
+					isPath = false;
+				}
+			});
+
+			//塞がっていない場合経路を再設定
+			if (isPath) {
+				this.children.forEach((entity) => {
+					const enemy = entity as Enemy;
+					enemy.path = enemy.newPath;
+				});
+			}
+
+			return isPath;
 		};
 	}
 }

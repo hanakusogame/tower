@@ -295,6 +295,16 @@
 			"type": "script",
 			"path": "script/EnemyBase.js",
 			"global": true
+		},
+		"MapBase": {
+			"type": "script",
+			"path": "script/MapBase.js",
+			"global": true
+		},
+		"UnitBase": {
+			"type": "script",
+			"path": "script/UnitBase.js",
+			"global": true
 		}
 	},
 	"moduleMainScripts": {
