@@ -1,12 +1,9 @@
-//import tl = require("@akashic-extension/akashic-timeline");
-//import { AStarFinder } from "astar-typescript";
+import { ButtonBase } from "./ButtonBase";
 import { Enemy } from "./Enemy";
 import { EnemyBase } from "./EnemyBase";
 import { EnemyInfo } from "./EnemyInfo";
 import { MainScene } from "./MainScene";
-//import { Map } from "./Map";
 import { MapBase } from "./MapBase";
-//import { UnitPrameter } from "./Parameter";
 import { Tower } from "./Tower";
 import { Unit } from "./Unit";
 import { UnitBase } from "./UnitBase";
@@ -15,8 +12,11 @@ declare function require(x: string): any;
 
 // メインのゲーム画面
 export class MainGame extends g.E {
+	public base: MapBase;
 	public baseEnemy: EnemyBase;
 	public baseUnit: UnitBase;
+	public unitInfo: UnitInfo;
+	public enemyInfo: EnemyInfo;
 	public reset: () => void;
 	public finish: () => void;
 	public clear: (enemy: Enemy) => void;
@@ -40,18 +40,13 @@ export class MainGame extends g.E {
 		const base = new MapBase(
 			{
 				scene: scene,
-				x: 30,
+				x: 10,
 				y: 55,
 			},
 			this
 		);
 		this.append(base);
-
-		const ePram = {
-			scene: scene,
-			x: base.x,
-			y: base.y,
-		};
+		this.base = base;
 
 		//タワー
 		const tower = new Tower({
@@ -69,26 +64,36 @@ export class MainGame extends g.E {
 		const unitInfo = new UnitInfo(scene);
 		this.append(unitInfo);
 		unitInfo.hide();
+		this.unitInfo = unitInfo;
 
 		const enemyInfo = new EnemyInfo(scene);
 		this.append(enemyInfo);
 		enemyInfo.hide();
+		this.enemyInfo = enemyInfo;
+
+		const ePram = {
+			scene: scene,
+		};
 
 		//ユニット表示用
 		const baseUnit = new UnitBase(ePram);
-		this.append(baseUnit);
+		base.append(baseUnit);
 		this.baseUnit = baseUnit;
 
 		//敵表示用
 		const baseEnemy = new EnemyBase(ePram, this, tower, enemyInfo, unitInfo);
-		this.append(baseEnemy);
+		base.append(baseEnemy);
 		this.baseEnemy = baseEnemy;
 		baseEnemy.children = [];
 
 		//ショット表示用
 		const baseShot = new g.E(ePram);
-		this.append(baseShot);
+		base.append(baseShot);
 		Unit.baseShot = baseShot;
+
+		//ユニット選択ボタン
+		const buttonBase = new ButtonBase(scene, this);
+		this.append(buttonBase);
 
 		this.append(tower);
 
@@ -140,85 +145,6 @@ export class MainGame extends g.E {
 		};
 		this.showUnitInfo = showUnitInfo;
 
-		const mapSize = 340 / 8; //仮
-
-		//選択したユニット表示用カーソル
-		const cursorUnit = new g.FilledRect({
-			scene: scene,
-			width: mapSize + 6,
-			height: mapSize + 6,
-			x: 450 - 3,
-			y: 80 - 3,
-			cssColor: "yellow",
-		});
-		this.append(cursorUnit);
-
-		//ユニット選択ボタン
-		for (let y = 0; y < 2; y++) {
-			for (let x = 0; x < 3; x++) {
-				const num = y * 3 + x;
-				const btn = new g.FilledRect({
-					scene: scene,
-					width: mapSize,
-					height: mapSize,
-					x: 450 + 65 * x,
-					y: 80 + 65 * y,
-					cssColor: "white",
-					touchable: true,
-				});
-				this.append(btn);
-
-				//画像
-				const sprBase = new g.FrameSprite({
-					scene: scene,
-					src: scene.assets.base as g.ImageAsset,
-					width: 50,
-					height: 50,
-					x: (mapSize - 50) / 2,
-					y: mapSize - 50,
-					frames: [0, 1],
-					frameNumber: num === 0 ? 0 : 1,
-				});
-				btn.append(sprBase);
-
-				//画像
-				const sprUnit = new g.FrameSprite({
-					scene: scene,
-					src: scene.assets.unit as g.ImageAsset,
-					width: 50,
-					height: 50,
-					x: 0,
-					y: -10,
-					frames: [0, 1, 2, 3, 4],
-					frameNumber: num,
-				});
-				sprBase.append(sprUnit);
-
-				//名称
-				const label = new g.Label({
-					scene: scene,
-					font: scene.textFont,
-					fontSize: 16,
-					text: baseUnit.prams[num].name,
-					y: mapSize,
-					textColor: "white",
-				});
-				btn.append(label);
-
-				btn.pointDown.add(() => {
-					base.unitNum = num;
-					cursorUnit.x = btn.x - 3;
-					cursorUnit.y = btn.y - 3;
-					cursorUnit.modified();
-					const pram = baseUnit.prams[num];
-
-					unitInfo.setPram(pram);
-					unitInfo.show();
-					enemyInfo.hide();
-				});
-			}
-		}
-
 		// ステージクリア判定と処理
 		this.clear = (enemy) => {
 			//敵を倒した時
@@ -269,6 +195,7 @@ export class MainGame extends g.E {
 
 			//マップのクリア
 			base.init();
+			next();
 			next();
 			return;
 		};

@@ -1,4 +1,3 @@
-import { Enemy } from "./Enemy";
 import { MainGame } from "./MainGame";
 import { MainScene } from "./MainScene";
 //マップ管理クラス
@@ -10,32 +9,29 @@ export class MapBase extends g.E {
 	public init: () => void;
 	public showPath: () => void;
 	public showMap: () => void;
+	public mapW = 7; //行
+	public mapH = 5; //列
+	public mapSize = 300 / 7;
 
 	constructor(pram: g.EParameterObject, mainGame: MainGame) {
 		super(pram);
-
 		const scene = this.scene as MainScene;
-
 		this.maps = [];
 
-		const mapSize = 340 / 8;
-		const mapW = 9; //行
-		const mapH = 7; //列
+		this.scale((300 / this.mapH) / this.mapSize);
+		this.modified();
 
-		//探索用配列
-		this.myMatrix = [
-			[0, 0, 0, 0, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 0, 0, 0, 0],
-		];
+		this.myMatrix = [];
+		for (let y = 0; y < this.mapH; y++) {
+			this.myMatrix[y] = [];
+			for (let x = 0; x < this.mapW; x++) {
+				this.myMatrix[y].push(0);
+			}
+		}
 
 		this.init = () => {
-			for (let y = 0; y < mapH; y++) {
-				for (let x = 0; x < mapH; x++) {
+			for (let y = 0; y < this.mapH; y++) {
+				for (let x = 0; x < this.mapH; x++) {
 					this.myMatrix[y][x] = 0;
 					this.maps[y][x].unit?.destroy();
 					this.maps[y][x].unit = null;
@@ -43,10 +39,11 @@ export class MapBase extends g.E {
 			}
 		};
 
+		let mainPath: number[][] = [];//出撃地点からタワーまでのパス
+
 		//経路の描画
 		const showPath: () => void = () => {
-			const enemy = mainGame.baseEnemy.children[0] as Enemy;
-			enemy.path.forEach((pos) => {
+			mainPath.forEach((pos) => {
 				const x = pos[0];
 				const y = pos[1];
 				this.maps[y][x].cssColor = "yellow";
@@ -57,8 +54,8 @@ export class MapBase extends g.E {
 
 		//マップ表示
 		const showMap: () => void = () => {
-			for (let x = 0; x < mapW; x++) {
-				for (let y = 0; y < mapH; y++) {
+			for (let x = 0; x < this.mapW; x++) {
+				for (let y = 0; y < this.mapH; y++) {
 					this.maps[y][x].cssColor = this.maps[y][x].tag;
 					this.maps[y][x].modified();
 				}
@@ -67,16 +64,16 @@ export class MapBase extends g.E {
 		this.showMap = showMap;
 
 		// マップ
-		for (let y = 0; y < mapH; y++) {
+		for (let y = 0; y < this.mapH; y++) {
 			this.maps[y] = [];
-			for (let x = 0; x < mapW; x++) {
+			for (let x = 0; x < this.mapW; x++) {
 				const color = (x + y) % 2 ? "white" : "#E0E0E0";
 				const map = new Map({
 					scene: scene,
-					width: mapSize - 2,
-					height: mapSize - 2,
-					x: mapSize * x,
-					y: mapSize * y,
+					width: this.mapSize - 2,
+					height: this.mapSize - 2,
+					x: this.mapSize * x,
+					y: this.mapSize * y,
 					cssColor: color,
 					touchable: true,
 					opacity: 0.8,
@@ -104,7 +101,9 @@ export class MapBase extends g.E {
 						this.myMatrix[y][x] = 1;
 
 						//ルートが通るかどうか
-						if (mainGame.baseEnemy.setPath(this.myMatrix)) {
+						const path = mainGame.baseEnemy.setPath(this.myMatrix);
+						if (path) {
+							mainPath = path;
 							//設置する
 							mainGame.baseUnit.setUnit(this.maps, this.unitNum, x, y);
 							scene.addScore(-price);

@@ -305,6 +305,11 @@
 			"type": "script",
 			"path": "script/UnitBase.js",
 			"global": true
+		},
+		"ButtonBase": {
+			"type": "script",
+			"path": "script/ButtonBase.js",
+			"global": true
 		}
 	},
 	"moduleMainScripts": {

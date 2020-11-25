@@ -20,6 +20,8 @@ export class Enemy extends g.E {
 	public move: (maps: Map[][]) => void;
 	public setPath: (aStar: AStarFinder) => boolean;
 	public life: number = 0;
+	// eslint-disable-next-line @typescript-eslint/member-ordering
+	static getPath: (aStar: AStarFinder, x: number, y: number) => number[][];
 
 	constructor(pram: g.EParameterObject, mainGame: MainGame, tower: Tower) {
 		super(pram);
@@ -85,9 +87,10 @@ export class Enemy extends g.E {
 		//経路の取得
 		const getPath: (aStar: AStarFinder, x: number, y: number) => number[][] = (aStar, x, y) => {
 			const startPos = { x: x, y: y };
-			const goalPos = { x: 8, y: 6 };
+			const goalPos = { x: mainGame.base.mapW - 1, y: mainGame.base.mapH-1 };
 			return aStar.findPath(startPos, goalPos);
 		};
+		Enemy.getPath = getPath;
 
 		//経路を一時的に取得して、取得できたかどうかを返す
 		this.setPath = (aStar) => {

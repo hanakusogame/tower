@@ -7,7 +7,6 @@ export class Tower extends g.Sprite {
 
 	constructor(pram: g.SpriteParameterObject) {
 		super(pram);
-
 		const scene: MainScene = this.scene as MainScene;
 
 		//タワーのライフ表示

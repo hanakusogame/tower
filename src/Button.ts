@@ -1,5 +1,4 @@
 export class Button extends g.FilledRect {
-
 	static font: g.Font;
 	public num: number = 0;
 	public label: g.Label;

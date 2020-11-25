@@ -14,7 +14,7 @@ import { UnitInfo } from "./UnitInfo";
 export class EnemyBase extends g.E {
 	public enemyCnt = 0;
 	public next: (stage: number, maps: Map[][]) => void;
-	public setPath: (myMatrix: number[][]) => boolean;
+	public setPath: (myMatrix: number[][]) => number[][];
 	constructor(pram: g.EParameterObject, mainGame: MainGame, tower: Tower, enemyInfo: EnemyInfo, unitInfo: UnitInfo) {
 		super(pram);
 
@@ -43,7 +43,7 @@ export class EnemyBase extends g.E {
 		//敵
 		const enemys: Enemy[] = [];
 		const mapSize = 340 / 8;
-		for (let i = 0; i < 10; i++) {
+		for (let i = 0; i < 12; i++) {
 			const enemy = new Enemy(
 				{
 					scene: scene,
@@ -64,39 +64,45 @@ export class EnemyBase extends g.E {
 		}
 		Unit.baseEnemy = this;
 
+		let enemyNum = 0;
+		const nextEnemys: Enemy[] = [];
 		//ネクストステージ
 		this.next = (stage: number, maps: Map[][]) => {
-			this.enemyCnt = 9;
+			//出撃する
+			nextEnemys.forEach((enemy) => {
+				//出撃
+				timeline
+					.create(enemy)
+					.wait(300 * i)
+					.call(() => {
+						enemy.isMove = true;
+						enemy.move(maps);
+					});
+			});
+
+			//敵の数
+			this.enemyCnt = 4;
 			if (stage % 4 === 0) {
 				this.enemyCnt = 1;
 			}
-			enemys.forEach((enemy, i) => {
-				if (this.enemyCnt < i) return;
+
+			//敵を作る
+			for (let i = this.enemyCnt - 1; 0 <= i; i--) {
+				const enemy = enemys[enemyNum % enemys.length];
 				this.append(enemy);
-				enemy.moveTo(maps[0][0].x, maps[0][0].y);
+				enemy.moveTo(i * 20, -40);
 				enemy.modified();
 				enemy.px = 0;
 				enemy.py = 0;
-				if (i !== 0) {
-					enemy.isMove = true;
-					let num = scene.random.get(0, 2);
-					if (stage % 4 === 0) {
-						num = 2 + Math.min(3, stage / 4);
-					}
-					timeline
-						.create(enemy)
-						.wait(300 * (enemys.length - 1 - i)) //逆から動かしているので注意(重ね順の関係)
-						.call(() => {
-							enemy.init(pramsEnemy[num]);
-							enemy.move(maps);
-						});
-				} else {
-					enemy.isMove = false;
-					enemy.opacity = 0;
-					enemy.touchable = false;
-					enemy.modified();
+				enemy.isMove = false;
+				let num = scene.random.get(0, 2);
+				if (stage % 4 === 0) {
+					num = 2 + Math.min(3, stage / 4);
 				}
-			});
+				enemyNum++;
+				enemy.init(pramsEnemy[num]);
+				nextEnemys.push(enemy);
+			}
 		};
 
 		//経路の探索
@@ -109,6 +115,10 @@ export class EnemyBase extends g.E {
 				},
 				diagonalAllowed: false,
 			});
+
+			//スタート地点からゴール地点までの経路を取得
+			const arr = Enemy.getPath(aStarInstance, 0, 0);
+			if (arr.length === 0) return null;
 
 			//敵の経路を設定
 			this.children.forEach((entity) => {
@@ -125,9 +135,10 @@ export class EnemyBase extends g.E {
 					const enemy = entity as Enemy;
 					enemy.path = enemy.newPath;
 				});
+				return arr;
+			} else {
+				return null;
 			}
-
-			return isPath;
 		};
 	}
 }
