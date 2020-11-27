@@ -346,7 +346,7 @@ export class MainScene extends g.Scene {
 
 			// メインループ
 			let bkTime = 0;
-			const timeLimit = 180;
+			const timeLimit = 30;
 			let startTime: number = 0;
 			this.update.add(() => {
 				// return;//デバッグ

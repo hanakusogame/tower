@@ -104,9 +104,7 @@ export class Enemy extends g.E {
 		//移動
 		let tween: tl.Tween;
 		this.move = (maps) => {
-			if (!scene.isStart) return;
-			if (!this.isMove) return;
-			if (this.life <= 0) return;
+			if (!scene.isStart || !this.isMove || this.life <= 0) return;
 			if (this.path.length === 0) {
 				tower.setDamage(10);
 				this.remove();
@@ -160,7 +158,9 @@ export class Enemy extends g.E {
 			bar.scaleX = 1;
 			bar.modified();
 			const id = ePram.id;
+			this.isMove = false;
 			if (id < 3) {
+				//小さい敵
 				this.append(sprImage);
 				if (sprImage2.parent) sprImage2.remove();
 				this.num = id * 4;
@@ -168,6 +168,7 @@ export class Enemy extends g.E {
 				sprImage.frameNumber = 0;
 				barOut.y = -28;
 			} else {
+				//大きい敵
 				this.append(sprImage2);
 				if (sprImage.parent) sprImage.remove();
 				this.num = (id - 3) * 4;

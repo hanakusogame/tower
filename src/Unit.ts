@@ -56,14 +56,15 @@ export class Unit extends g.FilledRect {
 
 		let cnt = 0;
 		this.update.add(() => {
-			if (uPram.id === 0) return;
+			if (uPram.id === 0) return;//壁
+
 			//最も近い敵を取得
 			let min = uPram.area;
 			let enemy: Enemy = null;
 			Unit.baseEnemy.children.forEach((entity) => {
 				const e = entity as Enemy;
-				if (e.id === 0) return;
 				if (!e.parent) return;
+				if (!e.isMove) return;
 				const distance = Math.sqrt(Math.pow(e.x - this.x, 2) + Math.pow(e.y - this.y, 2));
 				if (distance < min) {
 					min = distance;

@@ -17,8 +17,8 @@ export class Shot extends g.FilledRect {
 			let isHit = false;
 			baseEnemy.children.forEach((entity) => {
 				const enemy = entity as Enemy;
-				if (enemy.id === 0) return;
 				if (enemy.life <= 0) return;
+				if (!enemy.isMove) return;
 				if (g.Collision.intersectAreas(enemy, this)) {
 					enemy.hit(uPram.attack);
 					isHit = true;

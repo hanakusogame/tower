@@ -18,7 +18,7 @@ export class MapBase extends g.E {
 		const scene = this.scene as MainScene;
 		this.maps = [];
 
-		this.scale((300 / this.mapH) / this.mapSize);
+		this.scale(300 / this.mapH / this.mapSize);
 		this.modified();
 
 		this.myMatrix = [];
@@ -29,17 +29,7 @@ export class MapBase extends g.E {
 			}
 		}
 
-		this.init = () => {
-			for (let y = 0; y < this.mapH; y++) {
-				for (let x = 0; x < this.mapH; x++) {
-					this.myMatrix[y][x] = 0;
-					this.maps[y][x].unit?.destroy();
-					this.maps[y][x].unit = null;
-				}
-			}
-		};
-
-		let mainPath: number[][] = [];//出撃地点からタワーまでのパス
+		let mainPath: number[][] = []; //出撃地点からタワーまでのパス
 
 		//経路の描画
 		const showPath: () => void = () => {
@@ -86,51 +76,75 @@ export class MapBase extends g.E {
 
 				//ユニット設置
 				map.pointDown.add(() => {
-					if (this.unitNum !== 5) {
-						//すでに設置されている場合
-						if (this.myMatrix[y][x] !== 0) {
-							//情報表示
-							//showUnitInfo(map.unit, true);
-							return;
-						}
-
-						//仮設置
-						const bkNum = this.myMatrix[y][x];
-						const price = mainGame.baseUnit.prams[this.unitNum].price;
-						if (price > scene.score) return;
-						this.myMatrix[y][x] = 1;
-
-						//ルートが通るかどうか
-						const path = mainGame.baseEnemy.setPath(this.myMatrix);
-						if (path) {
-							mainPath = path;
-							//設置する
-							mainGame.baseUnit.setUnit(this.maps, this.unitNum, x, y);
-							scene.addScore(-price);
-
-							mainGame.showUnitInfo(map.unit, true);
-							showMap();
-							showPath();
-						} else {
-							this.myMatrix[y][x] = bkNum; //置けなかったら戻す
-						}
-					} else {
-						if (this.myMatrix[y][x] === 0) return;
-
-						//情報表示
-						mainGame.showUnitInfo(map.unit, false);
-
-						//売却
-						const price = map.unit.uPram.price;
-						this.myMatrix[y][x] = 0;
-						map.unit.destroy();
-						map.unit = null;
-						scene.addScore(price / 2);
-						showMap();
-						showPath();
-					}
+					setUnit(x, y);
 				});
 			}
 		}
+
+		//ユニット設置
+		const setUnit = (x: number, y: number): void => {
+			const map = this.maps[y][x];
+			if (this.unitNum !== 5) {
+				//すでに設置されている場合
+				if (this.myMatrix[y][x] !== 0) {
+					//情報表示
+					return;
+				}
+
+				//仮設置
+				const bkNum = this.myMatrix[y][x];
+				const price = mainGame.baseUnit.prams[this.unitNum].price;
+				if (price > scene.score) return;
+				this.myMatrix[y][x] = 1;
+
+				//ルートが通るかどうか
+				const path = mainGame.baseEnemy.setPath(this.myMatrix);
+				if (path) {
+					mainPath = path;
+					//設置する
+					mainGame.baseUnit.setUnit(this.maps, this.unitNum, x, y);
+					scene.addScore(-price);
+
+					mainGame.showUnitInfo(map.unit, true);
+					showMap();
+					showPath();
+				} else {
+					this.myMatrix[y][x] = bkNum; //置けなかったら戻す
+				}
+			} else {
+				if (this.myMatrix[y][x] === 0) return;
+
+				//情報表示
+				mainGame.showUnitInfo(map.unit, false);
+
+				//売却
+				const price = map.unit.uPram.price;
+				this.myMatrix[y][x] = 0;
+				map.unit.destroy();
+				map.unit = null;
+				scene.addScore(price / 2);
+				showMap();
+				showPath();
+			}
+		};
+
+		//初期化
+		this.init = () => {
+			//ユニットを全て消す
+			for (let y = 0; y < this.mapH; y++) {
+				for (let x = 0; x < this.mapH; x++) {
+					this.myMatrix[y][x] = 0;
+					this.maps[y][x].unit?.destroy();
+					this.maps[y][x].unit = null;
+				}
+			}
+
+			//壁を配置
+			for (let i = 0; i < 5; i++) {
+				const x = scene.random.get(0, this.mapW - 1);
+				const y = scene.random.get(0, this.mapH - 1);
+				setUnit(x, y);
+			}
+		};
 	}
 }

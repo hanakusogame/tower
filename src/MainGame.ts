@@ -142,6 +142,7 @@ export class MainGame extends g.E {
 			sprArea.scale((unit.uPram.area * 2) / sprArea.width);
 			sprArea.modified();
 			sprArea.show();
+			setTimeout(() => sprArea.hide(), 1000);
 		};
 		this.showUnitInfo = showUnitInfo;
 
@@ -157,12 +158,12 @@ export class MainGame extends g.E {
 			if (baseEnemy.enemyCnt === 0) {
 				scene.setTimeout(() => {
 					next();
-				}, 5000);
+				}, 2000);
 			}
 
 			//タワー陥落
 			if (tower.life <= 0) {
-				scene.addScore(-5000);
+				scene.addScore(-2000);
 				tower.init();
 			}
 		};
@@ -195,8 +196,14 @@ export class MainGame extends g.E {
 
 			//マップのクリア
 			base.init();
+			baseEnemy.init();
+
 			next();
-			next();
+
+			setTimeout(() => {
+				next();
+			}, 3000);
+
 			return;
 		};
 	}
