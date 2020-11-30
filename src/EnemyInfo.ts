@@ -34,12 +34,12 @@ export class EnemyInfo extends g.FilledRect {
 
 		this.labelName = setLabel("名称", 5, 0);
 		this.labelPrice = setLabel("0pt", 20, 20);
-		setLabel("HP", 5, 40);
-		this.labelLife = setLabel("0", 50, 40);
-		setLabel("速度", 5, 60);
-		this.labelSpeed = setLabel("0", 50, 60);
-		setLabel("攻撃", 5, 80);
-		this.labelAttack = setLabel("0", 50, 80);
+		setLabel("HP", 2, 40);
+		this.labelLife = setLabel("0", 40, 40);
+		setLabel("速度", 2, 60);
+		this.labelSpeed = setLabel("0", 40, 60);
+		setLabel("攻撃", 2, 80);
+		this.labelAttack = setLabel("0", 40, 80);
 
 		this.setPram = (pram) => {
 			const setLabel = (label: g.Label, str: string): void => {

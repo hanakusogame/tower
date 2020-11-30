@@ -20,7 +20,7 @@ export class UnitInfo extends g.FilledRect {
 		});
 
 		//ラベルをアペンドする
-		const setLabel = (text: string, x: number, y: number): g.Label => {
+		const setLabel = (text: string, x: number, y: number, e: g.E = this): g.Label => {
 			const label = new g.Label({
 				scene: scene,
 				font: scene.textFont,
@@ -29,20 +29,26 @@ export class UnitInfo extends g.FilledRect {
 				x: x,
 				y: y,
 			});
-			this.append(label);
+			e.append(label);
 			return label;
 		};
 
 		this.labelName = setLabel("名称", 5, 0);
 		this.labelPrice = setLabel("0pt", 20, 20);
-		setLabel("攻撃", 5, 40);
-		this.labelAttack = setLabel("0", 50, 40);
-		setLabel("射程", 5, 60);
-		this.labelArea = setLabel("0", 50, 60);
-		setLabel("速度", 5, 80);
-		this.labelSpeed = setLabel("0", 50, 80);
-		setLabel("間隔", 5, 100);
-		this.labelTime = setLabel("0", 50, 100);
+
+		const pramE = new g.E({
+			scene: scene,
+		});
+		this.append(pramE);
+
+		setLabel("攻撃", 5, 40, pramE);
+		this.labelAttack = setLabel("0", 50, 40, pramE);
+		setLabel("射程", 5, 60, pramE);
+		this.labelArea = setLabel("0", 50, 60, pramE);
+		setLabel("速度", 5, 80, pramE);
+		this.labelSpeed = setLabel("0", 50, 80, pramE);
+		setLabel("間隔", 5, 100, pramE);
+		this.labelTime = setLabel("0", 50, 100, pramE);
 
 		this.setPram = (pram) => {
 			const setLabel = (label: g.Label, str: string): void => {
@@ -50,12 +56,22 @@ export class UnitInfo extends g.FilledRect {
 				label.invalidate();
 			};
 
+			if (pram.id === 0 || pram.id === 5) {
+				pramE.hide();
+			} else {
+				pramE.show();
+			}
+
 			setLabel(this.labelName, pram.name);
 			setLabel(this.labelPrice, "" + pram.price + "pt");
 			setLabel(this.labelAttack, "" + pram.attack);
 			setLabel(this.labelArea, "" + pram.area);
 			setLabel(this.labelSpeed, "" + pram.speed);
 			setLabel(this.labelTime, "" + pram.time);
+
+			if (pram.id === 5) {
+				setLabel(this.labelPrice, "半額買取");
+			}
 		};
 	}
 }

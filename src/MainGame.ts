@@ -3,6 +3,7 @@ import { Enemy } from "./Enemy";
 import { EnemyBase } from "./EnemyBase";
 import { EnemyInfo } from "./EnemyInfo";
 import { MainScene } from "./MainScene";
+import { Map } from "./Map";
 import { MapBase } from "./MapBase";
 import { Tower } from "./Tower";
 import { Unit } from "./Unit";
@@ -22,7 +23,7 @@ export class MainGame extends g.E {
 	public start: () => void;
 	public clear: (enemy: Enemy) => void;
 	public setMode: (num: number) => void;
-	public showUnitInfo: (unit: Unit, isArea: boolean) => void;
+	public showUnitInfo: (map: Map, isArea: boolean) => void;
 
 	constructor(scene: MainScene) {
 		//const timeline = new tl.Timeline(scene);
@@ -32,8 +33,6 @@ export class MainGame extends g.E {
 		const waku = new g.Sprite({
 			scene: scene,
 			src: scene.assets.waku,
-			x: -3,
-			y: 43,
 		});
 		this.append(waku);
 
@@ -120,7 +119,8 @@ export class MainGame extends g.E {
 		sprArea.hide();
 
 		//情報表示
-		const showUnitInfo = (unit: Unit, isArea: boolean): void => {
+		const showUnitInfo = (map: Map, isArea: boolean): void => {
+			const unit = map.unit;
 			unitInfo.setPram(unit.uPram);
 			unitInfo.show();
 			enemyInfo.hide();
@@ -128,8 +128,8 @@ export class MainGame extends g.E {
 			if (!isArea) return;
 
 			//射程範囲を表示
-			const x = unit.x + unit.width / 2 - sprArea.width / 2;
-			const y = unit.y + unit.height / 2 - sprArea.height / 2;
+			const x = map.x + unit.width / 2 - sprArea.width / 2;
+			const y = map.y + unit.height / 2 - sprArea.height / 2;
 			sprArea.moveTo(x, y);
 			sprArea.scale((unit.area * 2) / sprArea.width);
 			sprArea.modified();

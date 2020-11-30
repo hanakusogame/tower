@@ -13,7 +13,7 @@ export class Tower extends g.FrameSprite {
 			width: 150,
 			height: 180,
 			x: 400,
-			y: 180,
+			y: 360,
 			frames: [0, 1],
 		});
 

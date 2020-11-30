@@ -34,17 +34,19 @@ export class EnemyBase extends g.E {
 			pramsEnemy.push({
 				id: Number(row[0]),
 				name: row[1],
-				life: Number(row[2]),
-				speed: Number(row[3]),
-				attack: Number(row[4]),
-				price: Number(row[5]),
+				size: Number(row[2]),
+				imageID: Number(row[3]),
+				life: Number(row[4]),
+				speed: Number(row[5]),
+				attack: Number(row[6]),
+				price: Number(row[7]),
 			});
 		}
 
 		//敵
 		const enemys: Enemy[] = [];
 		const mapSize = 450 / 7;
-		for (let i = 0; i < 20; i++) {
+		for (let i = 0; i < 25; i++) {
 			const enemy = new Enemy(
 				{
 					scene: scene,
@@ -65,7 +67,37 @@ export class EnemyBase extends g.E {
 		}
 		Unit.baseEnemy = this;
 
-		let enemyNum = 0;
+		//出す敵の順番と種類
+		const enemyList: number[][][] = [];
+		enemyList[0] = [[0, 0]];
+		enemyList[1] = [
+			[0, 0, 0, 0],
+			[1, 1, 1],
+			[2, 2, 2],
+		];
+		enemyList[4] = [[6]];
+		enemyList[5] = [
+			[1, 1, 1, 2, 2, 2, 0, 0, 0],
+			[2, 2, 2, 3, 3, 3, 4],
+			[0, 2, 3, 4, 5],
+		];
+		enemyList[8] = [[7]];
+		enemyList[9] = [
+			[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+			[2, 2, 2, 3, 3, 3, 4, 4],
+			[3, 3, 3, 3, 3, 3],
+			[4, 5, 4, 5, 4],
+		];
+		enemyList[12] = [[8]];
+		enemyList[13] = [
+			[1, 1, 1, 2, 2, 2, 3],
+			[2, 2, 2, 3, 3, 3, 4],
+		];
+		enemyList[16] = [[6, 7, 8]];
+
+		let enemyID = 0; //どのリストを使うか
+
+		let enemyNum = 0; //敵の数
 		const nextEnemys: Enemy[] = [];
 		//ネクストステージ
 		this.next = (stage: number, maps: Map[][]) => {
@@ -86,28 +118,25 @@ export class EnemyBase extends g.E {
 					});
 			});
 
-			//次の敵の数
-			let cnt = 6;
-			if (stage % 4 === 0) {
-				cnt = 1;
+			if (enemyList[stage]) {
+				enemyID = stage;
 			}
+
+			const num = scene.random.get(0, enemyList[enemyID].length - 1);
+			const list = enemyList[enemyID][num];
 
 			//敵を作る
 			nextEnemys.length = 0;
-			for (let i = 0; i < cnt; i++) {
+			for (let i = 0; i < list.length; i++) {
 				const enemy = enemys[enemyNum % enemys.length];
 				this.append(enemy);
-				enemy.moveTo((cnt - i) * 30 + 100, -(enemy.height * 2));
+				enemy.moveTo((list.length - i) * 30 + 100, -(enemy.height * 2));
 				timeline.create(enemy).wait(1500).moveY(-enemy.height, 500);
 				enemy.modified();
 				enemy.px = 0;
 				enemy.py = 0;
-				let num = scene.random.get(0, 2);
-				if (stage % 4 === 0) {
-					num = 2 + Math.min(3, stage / 4);
-				}
 				enemyNum++;
-				enemy.init(pramsEnemy[num]);
+				enemy.init(pramsEnemy[list[i]]);
 				nextEnemys.unshift(enemy);
 			}
 		};
@@ -156,6 +185,7 @@ export class EnemyBase extends g.E {
 				enemy.remove();
 			}
 			nextEnemys.length = 0;
+			enemyID = 0;
 		};
 	}
 }

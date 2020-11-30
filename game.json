@@ -39,7 +39,7 @@
 			"type": "audio",
 			"path": "audio/bgm",
 			"systemId": "music",
-			"duration": 59077
+			"duration": 78316
 		},
 		"se_hit": {
 			"type": "audio",
@@ -175,8 +175,8 @@
 		},
 		"waku": {
 			"type": "image",
-			"width": 444,
-			"height": 320,
+			"width": 640,
+			"height": 360,
 			"path": "image/waku.png"
 		},
 		"glyph28": {
@@ -265,7 +265,7 @@
 		"enemy": {
 			"type": "image",
 			"width": 300,
-			"height": 450,
+			"height": 660,
 			"path": "image/enemy.png"
 		},
 		"enemy2": {

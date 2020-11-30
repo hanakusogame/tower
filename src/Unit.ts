@@ -1,3 +1,4 @@
+import tl = require("@akashic-extension/akashic-timeline");
 import { Enemy } from "./Enemy";
 import { MainScene } from "./MainScene";
 import { Map } from "./Map";
@@ -16,7 +17,7 @@ export class Unit extends g.FilledRect {
 		super({
 			scene: g.game.scene(),
 			x: map.x,
-			y: map.y,
+			y: map.y - 50,
 			width: map.width,
 			height: map.height,
 			cssColor: Unit.colors[uPram.id],
@@ -25,6 +26,9 @@ export class Unit extends g.FilledRect {
 		this.uPram = uPram;
 		const scene = this.scene as MainScene;
 
+		const timeline = new tl.Timeline(this.scene);
+
+		timeline.create(this).moveY(map.y, 150);
 
 		//射程範囲の半径
 		this.area = (uPram.area / 10) * map.width;
@@ -54,8 +58,8 @@ export class Unit extends g.FilledRect {
 
 		const shotPram = {
 			scene: this.scene,
-			x: this.x + (this.width - 20) / 2,
-			y: this.y + (this.height - 8) / 2 - 15,
+			x: map.x + (this.width - 20) / 2,
+			y: map.y + (this.height - 8) / 2 - 15,
 			width: 20,
 			height: 8,
 			cssColor: "cyan",

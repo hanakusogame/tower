@@ -35,7 +35,7 @@ export class Enemy extends g.E {
 			x: (pram.width - 75) / 2,
 			y: pram.height - 112.5 - 10,
 			width: 75,
-			height: 112.5,
+			height: 110,
 			frames: [0, 1],
 			interval: 500,
 		});
@@ -158,13 +158,12 @@ export class Enemy extends g.E {
 			this.life = this.ePram.life;
 			bar.scaleX = 1;
 			bar.modified();
-			const id = ePram.id;
 			this.isMove = false;
-			if (id < 3) {
+			if (ePram.size === 1) {
 				//小さい敵
 				this.append(sprImage);
 				if (sprImage2.parent) sprImage2.remove();
-				this.num = id * 4;
+				this.num = this.ePram.imageID * 4;
 				sprImage.frames = [this.num, this.num + 1];
 				sprImage.frameNumber = 0;
 				barOut.y = -32;
@@ -172,7 +171,7 @@ export class Enemy extends g.E {
 				//大きい敵
 				this.append(sprImage2);
 				if (sprImage.parent) sprImage.remove();
-				this.num = (id - 3) * 4;
+				this.num = this.ePram.imageID * 4;
 				sprImage2.frames = [this.num, this.num + 1];
 				sprImage2.frameNumber = 0;
 				barOut.y = -110;

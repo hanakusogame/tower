@@ -18,9 +18,9 @@ export class ButtonBase extends g.E {
 			scene: scene,
 			width: mapSize + 6,
 			height: mapSize + 6,
-			x: 450 - 3,
-			y: 80 - 3,
-			cssColor: "yellow",
+			x: - 3,
+			y: - 3,
+			cssColor: "red",
 		});
 		this.append(cursorUnit);
 
@@ -38,13 +38,12 @@ export class ButtonBase extends g.E {
 		for (let y = 0; y < 2; y++) {
 			for (let x = 0; x < 3; x++) {
 				const num = y * 3 + x;
-				const btn = new g.FilledRect({
+				const btn = new g.E({
 					scene: scene,
 					width: mapSize,
 					height: mapSize,
 					x: 75 * x + (y * 5),
 					y: 75 * y,
-					cssColor: "white",
 					touchable: true,
 				});
 				this.append(btn);

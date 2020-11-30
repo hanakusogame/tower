@@ -77,10 +77,16 @@ export class MapBase extends g.E {
 				//ユニット設置
 				map.pointDown.add(() => {
 					if (this.unitNum !== 5) {
-						//購入
-						const price = mainGame.baseUnit.prams[this.unitNum].price;
-						if (price <= scene.score && setUnit(x, y)) {
-							scene.addScore(-price);
+						//すでに設置されている場合
+						if (this.myMatrix[y][x] !== 0) {
+							//情報表示
+							mainGame.showUnitInfo(map, true);
+						} else {
+							//購入
+							const price = mainGame.baseUnit.prams[this.unitNum].price;
+							if (price <= scene.score && setUnit(x, y)) {
+								scene.addScore(-price);
+							}
 						}
 					} else {
 						//売却
@@ -100,7 +106,7 @@ export class MapBase extends g.E {
 			if (this.myMatrix[y][x] === 0) return false;//無駄？
 
 			//情報表示
-			mainGame.showUnitInfo(map.unit, false);
+			mainGame.showUnitInfo(map, false);
 
 			this.myMatrix[y][x] = 0;
 			map.unit.destroy();
@@ -129,8 +135,7 @@ export class MapBase extends g.E {
 				mainPath = path;
 				//設置する
 				mainGame.baseUnit.setUnit(this.maps, this.unitNum, x, y);
-
-				mainGame.showUnitInfo(map.unit, true);
+				mainGame.showUnitInfo(map, true);
 				showMap();
 				showPath();
 			} else {

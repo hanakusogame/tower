@@ -15,6 +15,8 @@ export class UnitPrameter {
 export class EnemyPrameter {
 	id: number;
 	name: string;
+	size: number;
+	imageID: number;
 	life: number;
 	speed: number;
 	attack: number;
