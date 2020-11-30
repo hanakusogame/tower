@@ -1,11 +1,12 @@
 import { Enemy } from "./Enemy";
-import { UnitPrameter } from "./Parameter";
+import { Unit } from "./Unit";
 // ショットクラス
 export class Shot extends g.FilledRect {
 	public num = 0;
-	constructor(pram: g.FilledRectParameterObject, baseEnemy: g.E, uPram: UnitPrameter) {
+	constructor(pram: g.FilledRectParameterObject, baseEnemy: g.E, unit: Unit) {
 		super(pram);
 		let distance = 0;
+		const uPram = unit.uPram;
 		this.update.add(() => {
 			const x = uPram.speed * Math.cos(this.angle * (Math.PI / 180));
 			const y = uPram.speed * Math.sin(this.angle * (Math.PI / 180));
@@ -26,7 +27,7 @@ export class Shot extends g.FilledRect {
 			});
 
 			//敵に当たった場合と射程を外れた場合消す
-			if (isHit || distance > uPram.area) {
+			if (isHit || distance > unit.area) {
 				this.destroy();
 			}
 		});

@@ -43,7 +43,7 @@ export class EnemyBase extends g.E {
 
 		//敵
 		const enemys: Enemy[] = [];
-		const mapSize = 340 / 8;
+		const mapSize = 450 / 7;
 		for (let i = 0; i < 20; i++) {
 			const enemy = new Enemy(
 				{
@@ -77,7 +77,7 @@ export class EnemyBase extends g.E {
 				//出撃
 				timeline
 					.create(enemy)
-					.moveTo(0, -35, enemy.x * 10)
+					.moveX(0, enemy.x * 10)
 					.moveTo(maps[0][0].x, maps[0][0].y, 600 * i)
 					.call(() => {
 						this.append(enemy);
@@ -97,8 +97,8 @@ export class EnemyBase extends g.E {
 			for (let i = 0; i < cnt; i++) {
 				const enemy = enemys[enemyNum % enemys.length];
 				this.append(enemy);
-				enemy.moveTo((cnt - i) * 30 + 100, -80);
-				timeline.create(enemy).wait(1500).moveY(-35, 500);
+				enemy.moveTo((cnt - i) * 30 + 100, -(enemy.height * 2));
+				timeline.create(enemy).wait(1500).moveY(-enemy.height, 500);
 				enemy.modified();
 				enemy.px = 0;
 				enemy.py = 0;

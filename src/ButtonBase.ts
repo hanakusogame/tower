@@ -4,10 +4,14 @@ import { MainScene } from "./MainScene";
 export class ButtonBase extends g.E {
 	constructor(scene: MainScene, mainGame: MainGame) {
 		super({
-			scene:scene
+			scene: scene,
+			scaleX: mainGame.base.scaleX,
+			scaleY: mainGame.base.scaleY,
+			x: 430,
+			y:60
 		});
 
-		const mapSize = 340 / 8; //仮
+		const mapSize = mainGame.base.mapSize; //仮
 
 		//選択したユニット表示用カーソル
 		const cursorUnit = new g.FilledRect({
@@ -20,6 +24,16 @@ export class ButtonBase extends g.E {
 		});
 		this.append(cursorUnit);
 
+		const font = new g.DynamicFont({
+			game: g.game,
+			fontFamily: g.FontFamily.SansSerif,
+			size: 20,
+			strokeColor: "black",
+			fontColor:"white",
+			strokeWidth: 6,
+			fontWeight: g.FontWeight.Bold
+		});
+
 		//ユニット選択ボタン
 		for (let y = 0; y < 2; y++) {
 			for (let x = 0; x < 3; x++) {
@@ -28,21 +42,22 @@ export class ButtonBase extends g.E {
 					scene: scene,
 					width: mapSize,
 					height: mapSize,
-					x: 450 + 65 * x,
-					y: 80 + 65 * y,
+					x: 75 * x + (y * 5),
+					y: 75 * y,
 					cssColor: "white",
 					touchable: true,
 				});
 				this.append(btn);
 
 				//画像
+				const size = 75;
 				const sprBase = new g.FrameSprite({
 					scene: scene,
 					src: scene.assets.base as g.ImageAsset,
-					width: 50,
-					height: 50,
-					x: (mapSize - 50) / 2,
-					y: mapSize - 50,
+					width: size,
+					height: size,
+					x: (mapSize - size) / 2,
+					y: mapSize - size,
 					frames: [0, 1],
 					frameNumber: num === 0 ? 0 : 1,
 				});
@@ -52,23 +67,24 @@ export class ButtonBase extends g.E {
 				const sprUnit = new g.FrameSprite({
 					scene: scene,
 					src: scene.assets.unit as g.ImageAsset,
-					width: 50,
-					height: 50,
+					width: size,
+					height: size,
 					x: 0,
-					y: -10,
+					y: -15,
 					frames: [0, 1, 2, 3, 4],
 					frameNumber: num,
 				});
 				sprBase.append(sprUnit);
 
 				//名称
+				let str = "" + mainGame.baseUnit.prams[num].price;
+				if (num === 5) str = "売却";
 				const label = new g.Label({
 					scene: scene,
-					font: scene.textFont,
-					fontSize: 16,
-					text: mainGame.baseUnit.prams[num].name,
-					y: mapSize,
-					textColor: "white",
+					font: font,
+					fontSize: 20,
+					text: str,
+					y: mapSize - 30,
 				});
 				btn.append(label);
 

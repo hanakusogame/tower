@@ -7,6 +7,7 @@ export class UnitPrameter {
 	attack: number;
 	speed: number;
 	area: number;
+	time: number;
 	price: number;
 }
 

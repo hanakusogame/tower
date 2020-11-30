@@ -264,26 +264,26 @@
 		},
 		"enemy": {
 			"type": "image",
-			"width": 200,
-			"height": 300,
+			"width": 300,
+			"height": 450,
 			"path": "image/enemy.png"
 		},
 		"enemy2": {
 			"type": "image",
-			"width": 400,
-			"height": 400,
+			"width": 600,
+			"height": 600,
 			"path": "image/enemy2.png"
 		},
 		"unit": {
 			"type": "image",
-			"width": 250,
-			"height": 50,
+			"width": 375,
+			"height": 75,
 			"path": "image/unit.png"
 		},
 		"base": {
 			"type": "image",
-			"width": 100,
-			"height": 50,
+			"width": 150,
+			"height": 75,
 			"path": "image/base.png"
 		},
 		"Tower": {
@@ -310,6 +310,12 @@
 			"type": "script",
 			"path": "script/ButtonBase.js",
 			"global": true
+		},
+		"tower": {
+			"type": "image",
+			"width": 300,
+			"height": 180,
+			"path": "image/tower.png"
 		}
 	},
 	"moduleMainScripts": {

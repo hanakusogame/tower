@@ -43,6 +43,7 @@ export class MainScene extends g.Scene {
 			"area",
 			"enemy",
 			"enemy2",
+			"tower",
 			"unit",
 			"base",
 			"waku",
@@ -62,7 +63,7 @@ export class MainScene extends g.Scene {
 			"se_hit",
 			"se_item",
 			"unit_csv",
-			"enemy_csv"
+			"enemy_csv",
 		];
 		super(param);
 
@@ -152,6 +153,7 @@ export class MainScene extends g.Scene {
 				game: g.game,
 				fontFamily: g.FontFamily.SansSerif,
 				size: 16,
+				fontWeight: g.FontWeight.Bold,
 			});
 
 			let glyph = JSON.parse((this.assets.test as g.TextAsset).data);
@@ -233,13 +235,13 @@ export class MainScene extends g.Scene {
 			uiBase.append(labelScorePlus);
 
 			// タイム
-			uiBase.append(new g.Sprite({ scene: this, src: this.assets.time, x: 505, y: 320 }));
+			uiBase.append(new g.Sprite({ scene: this, src: this.assets.time, x: 5, y: 320 }));
 			const labelTime = new g.Label({
 				scene: this,
 				font: numFont,
 				fontSize: 32,
 				text: "70",
-				x: 545,
+				x: 45,
 				y: 323,
 			});
 			uiBase.append(labelTime);
@@ -346,7 +348,7 @@ export class MainScene extends g.Scene {
 
 			// メインループ
 			let bkTime = 0;
-			const timeLimit = 30;
+			const timeLimit = 180;
 			let startTime: number = 0;
 			this.update.add(() => {
 				// return;//デバッグ

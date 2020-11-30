@@ -24,8 +24,9 @@ export class UnitBase extends g.E {
 				name: row[1],
 				attack: Number(row[2]),
 				speed: Number(row[3]),
-				area: Number(row[4]),
-				price: Number(row[5]),
+				time: Number(row[4]),
+				area: Number(row[5]),
+				price: Number(row[6]),
 			});
 		}
 

@@ -11,9 +11,9 @@ export class EnemyInfo extends g.FilledRect {
 	constructor(scene: MainScene) {
 		super({
 			scene: scene,
-			width: 180,
-			height: 100,
-			x: 450,
+			width: 90,
+			height: 130,
+			x: 545,
 			y: 210,
 			cssColor: "white",
 		});
@@ -32,14 +32,14 @@ export class EnemyInfo extends g.FilledRect {
 			return label;
 		};
 
-		this.labelName = setLabel("名称", 5, 5);
-		this.labelPrice = setLabel("0pt", 20, 30);
-		setLabel("HP", 90, 25);
-		this.labelLife = setLabel("0", 140, 25);
-		setLabel("速度", 90, 50);
-		this.labelSpeed = setLabel("0", 140, 50);
-		setLabel("攻撃", 90, 75);
-		this.labelAttack = setLabel("0", 140, 75);
+		this.labelName = setLabel("名称", 5, 0);
+		this.labelPrice = setLabel("0pt", 20, 20);
+		setLabel("HP", 5, 40);
+		this.labelLife = setLabel("0", 50, 40);
+		setLabel("速度", 5, 60);
+		this.labelSpeed = setLabel("0", 50, 60);
+		setLabel("攻撃", 5, 80);
+		this.labelAttack = setLabel("0", 50, 80);
 
 		this.setPram = (pram) => {
 			const setLabel = (label: g.Label, str: string): void => {

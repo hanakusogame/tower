@@ -32,22 +32,23 @@ export class Enemy extends g.E {
 		const sprImage = new g.FrameSprite({
 			scene: scene,
 			src: scene.assets.enemy as g.ImageAsset,
-			x: (pram.width - 50) / 2,
-			y: pram.height - 75 - 10,
-			width: 50,
-			height: 75,
+			x: (pram.width - 75) / 2,
+			y: pram.height - 112.5 - 10,
+			width: 75,
+			height: 112.5,
 			frames: [0, 1],
 			interval: 500,
 		});
 		sprImage.start();
 
+		const sizeL = 150;
 		const sprImage2 = new g.FrameSprite({
 			scene: scene,
 			src: scene.assets.enemy2 as g.ImageAsset,
-			x: (pram.width - 100) / 2,
-			y: pram.height - 100 - 10,
-			width: 100,
-			height: 100,
+			x: (pram.width - sizeL) / 2,
+			y: pram.height - sizeL - 10,
+			width: sizeL,
+			height: sizeL,
 			frames: [0, 1],
 			interval: 500,
 		});
@@ -104,9 +105,9 @@ export class Enemy extends g.E {
 		//移動
 		let tween: tl.Tween;
 		this.move = (maps) => {
-			if (!scene.isStart || !this.isMove || this.life <= 0) return;
-			if (this.path.length === 0) {
-				tower.setDamage(10);
+			if (!scene.isStart || !this.isMove || this.life <= 0 || !this.parent) return;
+			if (this.path.length === 0 && tower.life !== 0) {
+				tower.setDamage(this.ePram.attack);
 				this.remove();
 				mainGame.clear(null);
 				return;
@@ -166,7 +167,7 @@ export class Enemy extends g.E {
 				this.num = id * 4;
 				sprImage.frames = [this.num, this.num + 1];
 				sprImage.frameNumber = 0;
-				barOut.y = -28;
+				barOut.y = -32;
 			} else {
 				//大きい敵
 				this.append(sprImage2);
@@ -174,7 +175,7 @@ export class Enemy extends g.E {
 				this.num = (id - 3) * 4;
 				sprImage2.frames = [this.num, this.num + 1];
 				sprImage2.frameNumber = 0;
-				barOut.y = -70;
+				barOut.y = -110;
 			}
 			barOut.modified();
 		};

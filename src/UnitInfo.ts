@@ -6,18 +6,18 @@ export class UnitInfo extends g.FilledRect {
 	public labelAttack: g.Label;
 	public labelArea: g.Label;
 	public labelSpeed: g.Label;
+	public labelTime: g.Label;
 	public setPram: (pram: UnitPrameter) => void;
 
 	constructor(scene: MainScene) {
 		super({
 			scene: scene,
-			width: 180,
-			height: 100,
-			x: 450,
+			width: 90,
+			height: 130,
+			x: 545,
 			y: 210,
 			cssColor: "#E0FFFF",
 		});
-
 
 		//ラベルをアペンドする
 		const setLabel = (text: string, x: number, y: number): g.Label => {
@@ -33,14 +33,16 @@ export class UnitInfo extends g.FilledRect {
 			return label;
 		};
 
-		this.labelName = setLabel("名称", 5, 5);
-		this.labelPrice = setLabel("0pt", 20, 30);
-		setLabel("攻撃", 90, 25);
-		this.labelAttack = setLabel("0", 140, 25);
-		setLabel("射程", 90, 50);
-		this.labelArea = setLabel("0", 140, 50);
-		setLabel("速度", 90, 75);
-		this.labelSpeed = setLabel("0", 140, 75);
+		this.labelName = setLabel("名称", 5, 0);
+		this.labelPrice = setLabel("0pt", 20, 20);
+		setLabel("攻撃", 5, 40);
+		this.labelAttack = setLabel("0", 50, 40);
+		setLabel("射程", 5, 60);
+		this.labelArea = setLabel("0", 50, 60);
+		setLabel("速度", 5, 80);
+		this.labelSpeed = setLabel("0", 50, 80);
+		setLabel("間隔", 5, 100);
+		this.labelTime = setLabel("0", 50, 100);
 
 		this.setPram = (pram) => {
 			const setLabel = (label: g.Label, str: string): void => {
@@ -53,6 +55,7 @@ export class UnitInfo extends g.FilledRect {
 			setLabel(this.labelAttack, "" + pram.attack);
 			setLabel(this.labelArea, "" + pram.area);
 			setLabel(this.labelSpeed, "" + pram.speed);
+			setLabel(this.labelTime, "" + pram.time);
 		};
 	}
 }
