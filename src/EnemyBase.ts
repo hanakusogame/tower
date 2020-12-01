@@ -112,7 +112,6 @@ export class EnemyBase extends g.E {
 					.moveX(0, enemy.x * 10)
 					.moveTo(maps[0][0].x, maps[0][0].y, 600 * i)
 					.call(() => {
-						this.append(enemy);
 						enemy.isMove = true;
 						enemy.move(maps);
 					});

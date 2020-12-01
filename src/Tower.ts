@@ -80,7 +80,9 @@ export class Tower extends g.FrameSprite {
 					this.angle = 0;
 					this.modified();
 				}, 200);
+				scene.playSound("se_miss");
 			} else {
+				scene.playSound("se_miss2");
 				timeline.create(this).moveY(360, 1000);
 			}
 		};

@@ -168,7 +168,7 @@ export class Enemy extends g.E {
 				this.num = this.ePram.imageID * 4;
 				sprImage.frames = [this.num, this.num + 1];
 				sprImage.frameNumber = 0;
-				barOut.y = -32;
+				barOut.y = -35;
 			} else {
 				//大きい敵
 				this.append(sprImage2);
