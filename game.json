@@ -316,6 +316,24 @@
 			"width": 300,
 			"height": 180,
 			"path": "image/tower.png"
+		},
+		"se_shot": {
+			"type": "audio",
+			"path": "audio/se_shot",
+			"systemId": "sound",
+			"duration": 131
+		},
+		"se_coin": {
+			"type": "audio",
+			"path": "audio/se_coin",
+			"systemId": "sound",
+			"duration": 915
+		},
+		"se_miss2": {
+			"type": "audio",
+			"path": "audio/se_miss2",
+			"systemId": "sound",
+			"duration": 2064
 		}
 	},
 	"moduleMainScripts": {

@@ -149,6 +149,8 @@ export class Enemy extends g.E {
 					mainGame.clear(this);
 					return false;
 				}, 300);
+
+				scene.playSound("se_hit");
 			}
 		};
 

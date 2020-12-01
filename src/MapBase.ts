@@ -76,6 +76,7 @@ export class MapBase extends g.E {
 
 				//ユニット設置
 				map.pointDown.add(() => {
+					if (!scene.isStart) return;
 					if (this.unitNum !== 5) {
 						//すでに設置されている場合
 						if (this.myMatrix[y][x] !== 0) {
@@ -86,6 +87,7 @@ export class MapBase extends g.E {
 							const price = mainGame.baseUnit.prams[this.unitNum].price;
 							if (price <= scene.score && setUnit(x, y)) {
 								scene.addScore(-price);
+								scene.playSound("se_move");
 							}
 						}
 					} else {
@@ -94,6 +96,7 @@ export class MapBase extends g.E {
 						const price = this.maps[y][x].unit.uPram.price;
 						if (removeUnit(x, y)) {
 							scene.addScore(price / 2);
+							scene.playSound("se_coin");
 						}
 					}
 				});
@@ -103,7 +106,7 @@ export class MapBase extends g.E {
 		//ユニット破棄
 		const removeUnit = (x: number, y: number): boolean => {
 			const map = this.maps[y][x];
-			if (this.myMatrix[y][x] === 0) return false;//無駄？
+			if (this.myMatrix[y][x] === 0) return false; //無駄？
 
 			//情報表示
 			mainGame.showUnitInfo(map, false);
@@ -159,7 +162,7 @@ export class MapBase extends g.E {
 
 			//壁を配置
 			this.unitNum = 0;
-			for (let i = 0; i < 5; i++) {
+			for (let i = 0; i < 8; i++) {
 				const x = scene.random.get(0, this.mapW - 1);
 				const y = scene.random.get(0, this.mapH - 1);
 				setUnit(x, y);

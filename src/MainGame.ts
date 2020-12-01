@@ -150,11 +150,14 @@ export class MainGame extends g.E {
 				//タワー陥落
 				scene.addScore(-2000);
 				this.start();
+				scene.playSound("se_miss2");
 			} else if (baseEnemy.enemyCnt === 0) {
 				//ステージクリア
 				scene.setTimeout(() => {
 					next(true);
 				}, 2000);
+			} else {
+				scene.playSound("se_miss");
 			}
 		};
 

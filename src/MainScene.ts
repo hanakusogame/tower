@@ -60,8 +60,11 @@ export class MainScene extends g.Scene {
 			"bgm",
 			"se_move",
 			"se_miss",
+			"se_miss2",
 			"se_hit",
 			"se_item",
+			"se_shot",
+			"se_coin",
 			"unit_csv",
 			"enemy_csv",
 		];
@@ -69,7 +72,7 @@ export class MainScene extends g.Scene {
 
 		const timeline = new tl.Timeline(this);
 		const timeline2 = new tl.Timeline(this);
-		const isDebug = true;
+		const isDebug = false;
 
 		this.loaded.add(() => {
 			g.game.vars.gameState = { score: 0 };
@@ -327,7 +330,7 @@ export class MainScene extends g.Scene {
 			});
 
 			config.bgmEvent = (num) => {
-				bgm.changeVolume(0.6 * num);
+				//bgm.changeVolume(0.6 * num);
 			};
 
 			config.colorEvent = (str) => {
@@ -335,8 +338,8 @@ export class MainScene extends g.Scene {
 				bg.modified();
 			};
 
-			const bgm = (this.assets.bgm as g.AudioAsset).play();
-			bgm.changeVolume(isDebug ? 0.0 : 0.3);
+			//const bgm = (this.assets.bgm as g.AudioAsset).play();
+			//bgm.changeVolume(isDebug ? 0.0 : 0.3);
 
 			this.playSound = (name: string) => {
 				(this.assets[name] as g.AudioAsset).play().changeVolume(config.volumes[1]);

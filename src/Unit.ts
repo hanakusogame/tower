@@ -59,7 +59,7 @@ export class Unit extends g.FilledRect {
 		const shotPram = {
 			scene: this.scene,
 			x: map.x + (this.width - 20) / 2,
-			y: map.y + (this.height - 8) / 2 - 15,
+			y: map.y + (this.height - 8) / 2 - 20,
 			width: 20,
 			height: 8,
 			cssColor: "cyan",
@@ -97,6 +97,7 @@ export class Unit extends g.FilledRect {
 				const shot = new Shot(shotPram, Unit.baseEnemy, this);
 				shot.angle = degree;
 				Unit.baseShot.append(shot);
+				scene.playSound("se_shot");
 			}
 			cnt++;
 		});

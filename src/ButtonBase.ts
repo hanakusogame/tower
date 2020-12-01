@@ -97,6 +97,8 @@ export class ButtonBase extends g.E {
 					mainGame.unitInfo.setPram(pram);
 					mainGame.unitInfo.show();
 					mainGame.enemyInfo.hide();
+
+					scene.playSound("se_move");
 				});
 			}
 		}
