@@ -176,6 +176,11 @@ export class EnemyBase extends g.E {
 			}
 		};
 
+		this.update.add(() => {
+			//重ね順変更
+			this.children.sort((a, b) => a.y - b.y);
+		});
+
 		//初期化
 		this.init = () => {
 			//子要素(敵)をすべて外す　逆順でないとうまくいかない

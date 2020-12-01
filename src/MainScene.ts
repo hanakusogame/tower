@@ -27,7 +27,7 @@ export class MainScene extends g.Scene {
 	public score: number;
 
 	constructor(param: g.SceneParameterObject) {
-		const version = "ver.0.2";
+		const version = "ver.0.4";
 
 		param.assetIds = [
 			"img_numbers_n",
