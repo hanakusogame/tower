@@ -282,7 +282,7 @@
 		},
 		"base": {
 			"type": "image",
-			"width": 150,
+			"width": 225,
 			"height": 75,
 			"path": "image/base.png"
 		},
@@ -334,6 +334,12 @@
 			"path": "audio/se_miss2",
 			"systemId": "sound",
 			"duration": 2064
+		},
+		"map": {
+			"type": "image",
+			"width": 192,
+			"height": 64,
+			"path": "image/map.png"
 		}
 	},
 	"moduleMainScripts": {

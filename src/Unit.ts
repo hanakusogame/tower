@@ -8,7 +8,7 @@ import { Shot } from "./Shot";
 //ユニットクラス
 export class Unit extends g.FilledRect {
 	static baseEnemy: g.E;
-	static colors = ["gray", "pink", "blue", "orange", "magenta"];
+	static colors = ["gray", "pink", "blue", "orange", "magenta", "gray", "gray"];
 	static baseShot: g.E;
 	public uPram: UnitPrameter;
 	public area: number = 0;
@@ -34,6 +34,11 @@ export class Unit extends g.FilledRect {
 		this.area = (uPram.area / 10) * map.width;
 
 		const size = 75;
+
+		let num = 0;
+		if (uPram.id !== 0) num = 1;
+		if (uPram.id === 6) num = 2;
+
 		const sprBase = new g.Sprite({
 			scene: this.scene,
 			src: this.scene.assets.base as g.ImageAsset,
@@ -41,7 +46,7 @@ export class Unit extends g.FilledRect {
 			height: size,
 			x: (map.width - size) / 2,
 			y: map.width - size,
-			srcX: (uPram.id === 0 ? 0 : 1) * size,
+			srcX: num * size,
 		});
 		this.append(sprBase);
 

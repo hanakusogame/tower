@@ -36,7 +36,7 @@ export class MapBase extends g.E {
 			mainPath.forEach((pos) => {
 				const x = pos[0];
 				const y = pos[1];
-				this.maps[y][x].cssColor = "yellow";
+				this.maps[y][x].frameNumber = 2;
 				this.maps[y][x].modified();
 			});
 		};
@@ -46,7 +46,7 @@ export class MapBase extends g.E {
 		const showMap: () => void = () => {
 			for (let x = 0; x < this.mapW; x++) {
 				for (let y = 0; y < this.mapH; y++) {
-					this.maps[y][x].cssColor = this.maps[y][x].tag;
+					this.maps[y][x].frameNumber = this.maps[y][x].tag;
 					this.maps[y][x].modified();
 				}
 			}
@@ -57,16 +57,17 @@ export class MapBase extends g.E {
 		for (let y = 0; y < this.mapH; y++) {
 			this.maps[y] = [];
 			for (let x = 0; x < this.mapW; x++) {
-				const color = (x + y) % 2 ? "white" : "#E0E0E0";
+				const color = (x + y) % 2;
 				const map = new Map({
 					scene: scene,
-					width: this.mapSize - 3,
-					height: this.mapSize - 3,
+					src: scene.assets.map as g.ImageAsset,
+					width: 64,
+					height: 64,
 					x: this.mapSize * x + y * 5,
 					y: this.mapSize * y,
-					cssColor: color,
 					touchable: true,
 					opacity: 0.8,
+					frames: [0, 1, 2],
 				});
 				map.tag = color;
 				this.maps[y][x] = map;
@@ -161,12 +162,16 @@ export class MapBase extends g.E {
 			}
 
 			//壁を配置
-			this.unitNum = 0;
+			this.unitNum = 6;
 			for (let i = 0; i < 8; i++) {
 				const x = scene.random.get(0, this.mapW - 1);
 				const y = scene.random.get(0, this.mapH - 1);
 				setUnit(x, y);
 			}
+			this.unitNum = 0;
+
+			mainGame.unitInfo.hide();
+			mainGame.enemyInfo.hide();
 		};
 	}
 }

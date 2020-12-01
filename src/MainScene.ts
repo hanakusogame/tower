@@ -27,6 +27,8 @@ export class MainScene extends g.Scene {
 	public score: number;
 
 	constructor(param: g.SceneParameterObject) {
+		const version = "ver.0.2";
+
 		param.assetIds = [
 			"img_numbers_n",
 			"img_numbers_n_red",
@@ -47,6 +49,7 @@ export class MainScene extends g.Scene {
 			"unit",
 			"base",
 			"waku",
+			"map",
 			"config",
 			"volume",
 			"test",
@@ -158,6 +161,14 @@ export class MainScene extends g.Scene {
 				size: 16,
 				fontWeight: g.FontWeight.Bold,
 			});
+
+			const versionLabel = new g.Label({
+				scene: this,
+				text: version,
+				font: this.textFont,
+				fontSize: 16,
+			});
+			sprTitle.append(versionLabel);
 
 			let glyph = JSON.parse((this.assets.test as g.TextAsset).data);
 			const numFont = new g.BitmapFont({

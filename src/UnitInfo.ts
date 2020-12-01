@@ -56,7 +56,7 @@ export class UnitInfo extends g.FilledRect {
 				label.invalidate();
 			};
 
-			if (pram.id === 0 || pram.id === 5) {
+			if (pram.id === 0 || pram.id === 5 || pram.id === 6) {
 				pramE.hide();
 			} else {
 				pramE.show();
