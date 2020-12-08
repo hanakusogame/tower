@@ -27,7 +27,7 @@ export class MainScene extends g.Scene {
 	public score: number;
 
 	constructor(param: g.SceneParameterObject) {
-		const version = "ver.0.4";
+		const version = "ver.1.0";
 
 		param.assetIds = [
 			"img_numbers_n",
@@ -350,7 +350,7 @@ export class MainScene extends g.Scene {
 				bg.modified();
 			};
 
-			const audio = ((this.random.get(0, 1) === 0) ? this.assets.bgm : this.assets.bgm2) as g.AudioAsset;
+			const audio = (this.random.get(0, 1) === 0 ? this.assets.bgm : this.assets.bgm2) as g.AudioAsset;
 			const bgm = audio.play();
 			bgm.changeVolume(isDebug ? 0.0 : 0.3);
 
