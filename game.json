@@ -340,6 +340,12 @@
 			"width": 192,
 			"height": 64,
 			"path": "image/map.png"
+		},
+		"bgm2": {
+			"type": "audio",
+			"path": "audio/bgm2",
+			"systemId": "music",
+			"duration": 76207
 		}
 	},
 	"moduleMainScripts": {

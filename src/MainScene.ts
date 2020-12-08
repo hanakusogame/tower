@@ -61,6 +61,7 @@ export class MainScene extends g.Scene {
 			"se_start",
 			"se_timeup",
 			"bgm",
+			"bgm2",
 			"se_move",
 			"se_miss",
 			"se_miss2",
@@ -349,8 +350,9 @@ export class MainScene extends g.Scene {
 				bg.modified();
 			};
 
-			//const bgm = (this.assets.bgm as g.AudioAsset).play();
-			//bgm.changeVolume(isDebug ? 0.0 : 0.3);
+			const audio = ((this.random.get(0, 1) === 0) ? this.assets.bgm : this.assets.bgm2) as g.AudioAsset;
+			const bgm = audio.play();
+			bgm.changeVolume(isDebug ? 0.0 : 0.3);
 
 			this.playSound = (name: string) => {
 				(this.assets[name] as g.AudioAsset).play().changeVolume(config.volumes[1]);
